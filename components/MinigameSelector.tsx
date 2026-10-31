@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { MinigameId, MinigameMeta } from '../types/game';
-import { Target, Layers, Sparkles, Play, Trophy, Clock, Zap, Gift } from 'lucide-react';
+import { Target, Layers, Sparkles, Play, Trophy, Clock, Zap, Gift, Type } from 'lucide-react';
 import { sounds } from '../utils/sound';
 
 interface MinigameSelectorProps {
@@ -44,6 +44,17 @@ const MINIGAMES: MinigameMeta[] = [
     estimatedTime: '20s',
     description: 'Burbujas flotantes en la pantalla. ¡Revienta suficientes burbujas para alcanzar los 20 puntos!',
   },
+  {
+    id: 'wordle',
+    title: 'Adivina la Palabra',
+    subtitle: 'Modo Wordle',
+    badge: 'INGENIO',
+    icon: 'type',
+    color: 'from-emerald-500 to-teal-600',
+    difficulty: 'Ingenio',
+    estimatedTime: '1-2m',
+    description: 'Adivina la palabra secreta de 5 letras en 6 intentos con pistas de colores verde, amarillo y gris.',
+  },
 ];
 
 export const MinigameSelector: React.FC<MinigameSelectorProps> = ({
@@ -58,6 +69,8 @@ export const MinigameSelector: React.FC<MinigameSelectorProps> = ({
         return <Layers className="w-6 h-6 text-white" />;
       case 'sparkles':
         return <Sparkles className="w-6 h-6 text-white" />;
+      case 'type':
+        return <Type className="w-6 h-6 text-white" />;
       default:
         return <Zap className="w-6 h-6 text-white" />;
     }
@@ -116,7 +129,7 @@ export const MinigameSelector: React.FC<MinigameSelectorProps> = ({
             <Zap className="w-4 h-4 text-amber-400" />
             Selecciona tu Desafío
           </h2>
-          <span className="text-xs text-slate-400">3 Minijuegos disponibles</span>
+          <span className="text-xs text-slate-400">4 Minijuegos disponibles</span>
         </div>
 
         <div className="grid gap-3.5">

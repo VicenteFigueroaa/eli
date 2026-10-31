@@ -7,6 +7,7 @@ import { MinigameSelector } from '../components/MinigameSelector';
 import { HunterMinigame } from '../components/HunterMinigame';
 import { MemoryMinigame } from '../components/MemoryMinigame';
 import { BubbleMinigame } from '../components/BubbleMinigame';
+import { WordleMinigame } from '../components/WordleMinigame';
 import { RouletteModal } from '../components/RouletteModal';
 import { PrizeInventoryModal } from '../components/PrizeInventoryModal';
 
@@ -110,6 +111,13 @@ export default function Home() {
         {activeView === 'bubbles' && (
           <BubbleMinigame
             onComplete={() => handleGameComplete('Rompe-Burbujas')}
+            onBack={handleBackToHome}
+          />
+        )}
+
+        {activeView === 'wordle' && (
+          <WordleMinigame
+            onComplete={() => handleGameComplete('Adivina la Palabra (Wordle)')}
             onBack={handleBackToHome}
           />
         )}

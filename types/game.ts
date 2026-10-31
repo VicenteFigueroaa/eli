@@ -16,7 +16,7 @@ export interface Prize {
   imagePlaceholder?: string;
 }
 
-export type MinigameId = 'hunter' | 'memory' | 'bubbles';
+export type MinigameId = 'hunter' | 'memory' | 'bubbles' | 'wordle';
 
 export interface MinigameMeta {
   id: MinigameId;
@@ -25,7 +25,7 @@ export interface MinigameMeta {
   badge: string;
   icon: string;
   color: string;
-  difficulty: 'Fácil' | 'Medio' | 'Rápido';
+  difficulty: 'Fácil' | 'Medio' | 'Rápido' | 'Ingenio';
   estimatedTime: string;
   description: string;
 }
