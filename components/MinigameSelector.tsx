@@ -47,13 +47,13 @@ const MINIGAMES: MinigameMeta[] = [
   {
     id: 'wordle',
     title: 'Adivina la Palabra',
-    subtitle: 'Palabra Secreta',
-    badge: 'ESPECIAL ❤️',
+    subtitle: 'Modo Wordle',
+    badge: 'INGENIO',
     icon: 'type',
-    color: 'from-pink-500 to-rose-600',
+    color: 'from-emerald-500 to-teal-600',
     difficulty: 'Ingenio',
-    estimatedTime: '1m',
-    description: 'Adivina la palabra secreta de 7 letras en 6 intentos. Pista: ¡Es el nombre de alguien muy especial!',
+    estimatedTime: '1-2m',
+    description: 'Adivina la palabra secreta de 7 letras en 6 intentos con pistas de colores verde, amarillo y gris.',
   },
 ];
 
