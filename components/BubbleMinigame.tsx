@@ -7,6 +7,7 @@ import { sounds } from '../utils/sound';
 interface BubbleMinigameProps {
   onComplete: () => void;
   onBack: () => void;
+  alreadyWon?: boolean;
 }
 
 interface Bubble {
@@ -30,6 +31,7 @@ interface FloatingText {
 export const BubbleMinigame: React.FC<BubbleMinigameProps> = ({
   onComplete,
   onBack,
+  alreadyWon = false,
 }) => {
   const [score, setScore] = useState(0);
   const targetScore = 20;
@@ -165,9 +167,11 @@ export const BubbleMinigame: React.FC<BubbleMinigameProps> = ({
   const handleWin = () => {
     setGameState('won');
     sounds.playWin();
-    setTimeout(() => {
-      onComplete();
-    }, 1200);
+    if (!alreadyWon) {
+      setTimeout(() => {
+        onComplete();
+      }, 1200);
+    }
   };
 
   const handleRestart = () => {
@@ -270,14 +274,36 @@ export const BubbleMinigame: React.FC<BubbleMinigameProps> = ({
       {/* Footer State */}
       <div className="pt-1">
         {gameState === 'won' ? (
-          <div className="text-center py-3 space-y-1">
+          <div className="text-center py-3 space-y-2">
             <div className="text-emerald-400 font-black text-base flex items-center justify-center gap-1.5">
               <Sparkles className="w-5 h-5" />
               ¡META DE PUNTOS ALCANZADA!
             </div>
-            <p className="text-xs text-amber-300 font-semibold animate-pulse">
-              Desbloqueando la Ruleta de Premios...
-            </p>
+            {alreadyWon ? (
+              <div className="space-y-3">
+                <p className="text-xs text-slate-300">
+                  ¡Gran velocidad! Ya habías reclamado el tiro de ruleta de este juego.
+                </p>
+                <div className="flex gap-2">
+                  <button
+                    onClick={handleRestart}
+                    className="flex-1 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 active:scale-95 transition-all"
+                  >
+                    Jugar de Nuevo
+                  </button>
+                  <button
+                    onClick={onBack}
+                    className="flex-1 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs active:scale-95 transition-all"
+                  >
+                    Volver al Menú
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <p className="text-xs text-amber-300 font-semibold animate-pulse">
+                Desbloqueando la Ruleta de Premios...
+              </p>
+            )}
           </div>
         ) : gameState === 'lost' ? (
           <div className="space-y-2">

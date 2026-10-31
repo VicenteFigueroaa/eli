@@ -14,18 +14,23 @@ import { PrizeInventoryModal } from '../components/PrizeInventoryModal';
 export default function Home() {
   const [activeView, setActiveView] = useState<'selector' | MinigameId>('selector');
   const [wonPrizes, setWonPrizes] = useState<WonPrize[]>([]);
+  const [wonGames, setWonGames] = useState<MinigameId[]>([]);
   const [isRouletteOpen, setIsRouletteOpen] = useState(false);
   const [isInventoryOpen, setIsInventoryOpen] = useState(false);
   const [lastGameTitle, setLastGameTitle] = useState('Minijuego');
   const [isClient, setIsClient] = useState(false);
 
-  // Load saved prizes from localStorage safely on client mount
+  // Load saved prizes and won games from localStorage safely on mount
   useEffect(() => {
     setIsClient(true);
     try {
-      const saved = localStorage.getItem('fortuna_won_prizes');
-      if (saved) {
-        setWonPrizes(JSON.parse(saved));
+      const savedPrizes = localStorage.getItem('fortuna_won_prizes');
+      if (savedPrizes) {
+        setWonPrizes(JSON.parse(savedPrizes));
+      }
+      const savedGames = localStorage.getItem('fortuna_won_games');
+      if (savedGames) {
+        setWonGames(JSON.parse(savedGames));
       }
     } catch {
       // Ignore parse errors
@@ -41,13 +46,30 @@ export default function Home() {
     }
   };
 
+  const saveWonGames = (updated: MinigameId[]) => {
+    setWonGames(updated);
+    try {
+      localStorage.setItem('fortuna_won_games', JSON.stringify(updated));
+    } catch {
+      // Ignore write errors
+    }
+  };
+
   const handleSelectGame = (id: MinigameId) => {
     setActiveView(id);
   };
 
-  const handleGameComplete = (gameName: string) => {
+  // Called when a minigame is completed
+  const handleGameComplete = (gameId: MinigameId, gameName: string) => {
     setLastGameTitle(gameName);
-    setIsRouletteOpen(true);
+
+    // If game has NOT been won yet -> Record win and open roulette!
+    if (!wonGames.includes(gameId)) {
+      const updated = [...wonGames, gameId];
+      saveWonGames(updated);
+      setIsRouletteOpen(true);
+    }
+    // If it was already won, minigame handles congratulating without triggering roulette.
   };
 
   const handlePrizeWon = (prize: WonPrize) => {
@@ -57,6 +79,10 @@ export default function Home() {
 
   const handleClearPrizes = () => {
     savePrizes([]);
+  };
+
+  const handleResetProgress = () => {
+    saveWonGames([]);
   };
 
   const handleBackToHome = () => {
@@ -78,46 +104,48 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
-      {/* Fixed/Sticky Top App Header */}
-      <Header
-        wonPrizes={wonPrizes}
-        onOpenInventory={() => setIsInventoryOpen(true)}
-        onHomeClick={handleBackToHome}
-      />
+      {/* Sound button only header */}
+      <Header />
 
       {/* Main Mobile App Frame Viewport */}
-      <main className="flex-1 w-full max-w-md mx-auto px-4 pt-4 pb-8 flex flex-col">
+      <main className="flex-1 w-full max-w-md mx-auto px-4 pt-1 pb-8 flex flex-col">
         {activeView === 'selector' && (
           <MinigameSelector
             onSelectGame={handleSelectGame}
             onDirectRoulette={handleDirectRoulette}
+            wonGames={wonGames}
+            onResetProgress={handleResetProgress}
           />
         )}
 
         {activeView === 'hunter' && (
           <HunterMinigame
-            onComplete={() => handleGameComplete('El Cazador del Momento')}
+            alreadyWon={wonGames.includes('hunter')}
+            onComplete={() => handleGameComplete('hunter', 'El Cazador del Momento')}
             onBack={handleBackToHome}
           />
         )}
 
         {activeView === 'memory' && (
           <MemoryMinigame
-            onComplete={() => handleGameComplete('Busca-Parejas')}
+            alreadyWon={wonGames.includes('memory')}
+            onComplete={() => handleGameComplete('memory', 'Busca-Parejas')}
             onBack={handleBackToHome}
           />
         )}
 
         {activeView === 'bubbles' && (
           <BubbleMinigame
-            onComplete={() => handleGameComplete('Rompe-Burbujas')}
+            alreadyWon={wonGames.includes('bubbles')}
+            onComplete={() => handleGameComplete('bubbles', 'Rompe-Burbujas')}
             onBack={handleBackToHome}
           />
         )}
 
         {activeView === 'wordle' && (
           <WordleMinigame
-            onComplete={() => handleGameComplete('Adivina la Palabra (Wordle)')}
+            alreadyWon={wonGames.includes('wordle')}
+            onComplete={() => handleGameComplete('wordle', 'Adivina la Palabra (Wordle)')}
             onBack={handleBackToHome}
           />
         )}

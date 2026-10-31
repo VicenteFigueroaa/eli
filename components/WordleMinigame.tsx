@@ -7,6 +7,7 @@ import { sounds } from '../utils/sound';
 interface WordleMinigameProps {
   onComplete: () => void;
   onBack: () => void;
+  alreadyWon?: boolean;
 }
 
 type LetterStatus = 'correct' | 'present' | 'absent' | 'empty';
@@ -25,6 +26,7 @@ const KEYBOARD_ROWS = [
 export const WordleMinigame: React.FC<WordleMinigameProps> = ({
   onComplete,
   onBack,
+  alreadyWon = false,
 }) => {
   const [targetWord, setTargetWord] = useState(SECRET_WORD);
   const [guesses, setGuesses] = useState<string[]>([]);
@@ -116,9 +118,11 @@ export const WordleMinigame: React.FC<WordleMinigameProps> = ({
           setGameState('won');
           sounds.playWin();
           showToast('¡EXCELENTE! ¡ADIVINASTE! 🎉');
-          setTimeout(() => {
-            onComplete();
-          }, 1500);
+          if (!alreadyWon) {
+            setTimeout(() => {
+              onComplete();
+            }, 1500);
+          }
         } else if (newGuesses.length >= MAX_ATTEMPTS) {
           // Lost
           setGameState('lost');
@@ -282,14 +286,36 @@ export const WordleMinigame: React.FC<WordleMinigameProps> = ({
 
       {/* Status banner when won or lost */}
       {gameState === 'won' ? (
-        <div className="text-center py-2 space-y-1">
+        <div className="text-center py-2 space-y-2">
           <div className="text-emerald-400 font-black text-sm flex items-center justify-center gap-1.5">
             <Sparkles className="w-4 h-4" />
             ¡ADIVINASTE EL NOMBRE!
           </div>
-          <p className="text-xs text-amber-300 font-semibold animate-pulse">
-            Desbloqueando la Ruleta de Premios...
-          </p>
+          {alreadyWon ? (
+            <div className="space-y-3">
+              <p className="text-xs text-slate-300">
+                ¡Gran ingenio! Ya habías reclamado el tiro de ruleta de este juego.
+              </p>
+              <div className="flex gap-2">
+                <button
+                  onClick={startNewGame}
+                  className="flex-1 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-700 active:scale-95 transition-all"
+                >
+                  Jugar de Nuevo
+                </button>
+                <button
+                  onClick={onBack}
+                  className="flex-1 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs active:scale-95 transition-all"
+                >
+                  Volver al Menú
+                </button>
+              </div>
+            </div>
+          ) : (
+            <p className="text-xs text-amber-300 font-semibold animate-pulse">
+              Desbloqueando la Ruleta de Premios...
+            </p>
+          )}
         </div>
       ) : gameState === 'lost' ? (
         <div className="text-center py-2 space-y-2">
