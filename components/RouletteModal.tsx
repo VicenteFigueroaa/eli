@@ -150,8 +150,8 @@ export const RouletteModal: React.FC<RouletteModalProps> = ({
     ctx.strokeStyle = '#FEF08A';
     ctx.stroke();
 
-    // Draw 18 LED bulb pegs around rim (3 per slice for 6 slices)
-    const totalPegs = 18;
+    // Draw 16 LED bulb pegs around rim
+    const totalPegs = 16;
     for (let p = 0; p < totalPegs; p++) {
       const angle = (p * (360 / totalPegs) * Math.PI) / 180;
       const pegX = center + (radius + 1) * Math.cos(angle);
@@ -397,22 +397,16 @@ export const RouletteModal: React.FC<RouletteModalProps> = ({
           />
         </div>
 
-        {/* Prize breakdown summary pills with exact configured probabilities */}
+        {/* Prize breakdown summary pills */}
         <div className="flex flex-wrap items-center justify-center gap-1.5 text-[10px] font-bold text-slate-400">
-          <span className="flex items-center gap-1 text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-md border border-cyan-500/20">
-            💵 $150 (28%)
+          <span className="flex items-center gap-1 text-pink-400 bg-pink-500/10 px-2 py-0.5 rounded-md border border-pink-500/20">
+            🛍️ Carrito SHEIN
           </span>
           <span className="flex items-center gap-1 text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
-            💰 $200 (24%)
-          </span>
-          <span className="flex items-center gap-1 text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">
-            👑 $300 (25%)
+            <Coins className="w-3 h-3" /> $150, $200 y $300 MXN
           </span>
           <span className="flex items-center gap-1 text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/20">
-            <Package className="w-3 h-3" /> Producto (13%)
-          </span>
-          <span className="flex items-center gap-1 text-pink-400 bg-pink-500/10 px-2 py-0.5 rounded-md border border-pink-500/20">
-            🛍️ SHEIN (10%)
+            <Package className="w-3 h-3" /> Cajas Misteriosas
           </span>
         </div>
 

@@ -51,7 +51,6 @@ export const MYSTERY_PRODUCTS: MysteryProduct[] = [
   },
 ];
 
-// 6 Casillas de la Ruleta con las probabilidades exactas solicitadas (Suma = 100%)
 export const PRIZES: Prize[] = [
   {
     id: 'shein-cart',
@@ -65,38 +64,10 @@ export const PRIZES: Prize[] = [
     textColor: '#FFFFFF',
     icon: 'shopping-bag',
     description: '¡Premio Mayor! Ganaste un carrito de compras de SHEIN para estrenar lo que quieras.',
-    weight: 10, // 10%
+    weight: 18, // 18%
   },
   {
-    id: 'cash-150',
-    name: '$150 MXN en Efectivo',
-    type: 'cash',
-    value: 150,
-    valueText: '$150 MXN',
-    badgeText: 'PREMIO MAYOR 💵',
-    color: '#06B6D4', // Cyan
-    accentColor: '#0891B2',
-    textColor: '#FFFFFF',
-    icon: 'banknote',
-    description: '¡Enhorabuena! $150 pesos mexicanos en efectivo directo para ti.',
-    weight: 28, // 28%
-  },
-  {
-    id: 'cash-300-a',
-    name: '$300 MXN en Efectivo',
-    type: 'cash',
-    value: 300,
-    valueText: '$300 MXN',
-    badgeText: 'PREMIO MAYOR 👑',
-    color: '#F59E0B', // Amber / Gold
-    accentColor: '#D97706',
-    textColor: '#FFFFFF',
-    icon: 'crown',
-    description: '¡Felicidades! Ganaste el premio mayor de $300 pesos en efectivo directo para ti.',
-    weight: 17, // 17%
-  },
-  {
-    id: 'prod-mystery',
+    id: 'prod-1',
     name: 'Producto',
     type: 'product',
     value: 350,
@@ -107,7 +78,35 @@ export const PRIZES: Prize[] = [
     textColor: '#FFFFFF',
     icon: 'gift',
     description: '¡Premio de producto! Toca una caja misteriosa con "?" para descubrir tu regalo de belleza.',
-    weight: 13, // 13%
+    weight: 4.5, // 4.5% (Total 4 casillas = 18%)
+  },
+  {
+    id: 'cash-300',
+    name: '$300 MXN en Efectivo',
+    type: 'cash',
+    value: 300,
+    valueText: '$300 MXN',
+    badgeText: 'PREMIO MAYOR 👑',
+    color: '#F59E0B', // Amber / Gold
+    accentColor: '#D97706',
+    textColor: '#FFFFFF',
+    icon: 'crown',
+    description: '¡Felicidades! Ganaste el premio mayor de $300 pesos en efectivo directo para ti.',
+    weight: 18, // 18%
+  },
+  {
+    id: 'prod-2',
+    name: 'Producto',
+    type: 'product',
+    value: 350,
+    valueText: 'Caja Misteriosa',
+    badgeText: 'PRODUCTO 🎁',
+    color: '#3B82F6', // Blue
+    accentColor: '#2563EB',
+    textColor: '#FFFFFF',
+    icon: 'package',
+    description: '¡Premio de producto! Toca una caja misteriosa con "?" para descubrir tu regalo de belleza.',
+    weight: 4.5, // 4.5%
   },
   {
     id: 'cash-200',
@@ -121,21 +120,49 @@ export const PRIZES: Prize[] = [
     textColor: '#FFFFFF',
     icon: 'wallet',
     description: '¡Excelente tiro! $200 pesos mexicanos en efectivo transferibles a tu cuenta.',
+    weight: 22, // 22%
+  },
+  {
+    id: 'prod-3',
+    name: 'Producto',
+    type: 'product',
+    value: 350,
+    valueText: 'Caja Misteriosa',
+    badgeText: 'PRODUCTO 🎁',
+    color: '#F97316', // Orange
+    accentColor: '#EA580C',
+    textColor: '#FFFFFF',
+    icon: 'gift',
+    description: '¡Premio de producto! Toca una caja misteriosa con "?" para descubrir tu regalo de belleza.',
+    weight: 4.5, // 4.5%
+  },
+  {
+    id: 'cash-150',
+    name: '$150 MXN en Efectivo',
+    type: 'cash',
+    value: 150,
+    valueText: '$150 MXN',
+    badgeText: 'PREMIO MAYOR 💵',
+    color: '#06B6D4', // Cyan
+    accentColor: '#0891B2',
+    textColor: '#FFFFFF',
+    icon: 'banknote',
+    description: '¡Enhorabuena! $150 pesos mexicanos en efectivo directo para ti.',
     weight: 24, // 24%
   },
   {
-    id: 'cash-300-b',
-    name: '$300 MXN en Efectivo',
-    type: 'cash',
-    value: 300,
-    valueText: '$300 MXN',
-    badgeText: 'PREMIO MAYOR 👑',
-    color: '#EAB308', // Yellow / Golden
-    accentColor: '#CA8A04',
+    id: 'prod-4',
+    name: 'Producto',
+    type: 'product',
+    value: 350,
+    valueText: 'Caja Misteriosa',
+    badgeText: 'PRODUCTO 🎁',
+    color: '#6366F1', // Indigo
+    accentColor: '#4F46E5',
     textColor: '#FFFFFF',
-    icon: 'crown',
-    description: '¡Felicidades! Ganaste el premio mayor de $300 pesos en efectivo directo para ti.',
-    weight: 8, // 8%
+    icon: 'package',
+    description: '¡Premio de producto! Toca una caja misteriosa con "?" para descubrir tu regalo de belleza.',
+    weight: 4.5, // 4.5%
   },
 ];
 
