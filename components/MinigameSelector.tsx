@@ -47,13 +47,13 @@ const MINIGAMES: MinigameMeta[] = [
   {
     id: 'wordle',
     title: 'Adivina la Palabra',
-    subtitle: 'Modo Wordle',
-    badge: 'INGENIO',
+    subtitle: 'Palabra Secreta',
+    badge: 'ESPECIAL ❤️',
     icon: 'type',
-    color: 'from-emerald-500 to-teal-600',
+    color: 'from-pink-500 to-rose-600',
     difficulty: 'Ingenio',
     estimatedTime: '1-2m',
-    description: 'Adivina la palabra secreta de 5 letras en 6 intentos con pistas de colores verde, amarillo y gris.',
+    description: 'Adivina la palabra secreta de 7 letras en 6 intentos con pistas de colores verde, amarillo y gris.',
   },
 ];
 
