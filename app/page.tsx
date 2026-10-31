@@ -160,6 +160,7 @@ export default function Home() {
         }}
         onPrizeWon={handlePrizeWon}
         triggerGameTitle={lastGameTitle}
+        wonProductIds={wonPrizes.filter((p) => p.type === 'product' && p.prizeId !== 'shein-cart').map((p) => p.prizeId)}
       />
 
       {/* Prize Inventory / Wallet Modal */}

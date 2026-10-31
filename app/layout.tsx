@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Fortuna Play | Minijuegos y Ruleta de Premios",
-  description: "Supera minijuegos en tu celular y gira la ruleta para ganar premios mayores en efectivo ($150, $200 y $300 MXN) y productos exclusivos.",
+  title: "Juego",
+  description: "Minijuegos para celular",
 };
 
 export const viewport: Viewport = {

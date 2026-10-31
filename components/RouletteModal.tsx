@@ -24,6 +24,7 @@ interface RouletteModalProps {
   onClose: () => void;
   onPrizeWon: (prize: WonPrize) => void;
   triggerGameTitle?: string;
+  wonProductIds?: string[];
 }
 
 export const RouletteModal: React.FC<RouletteModalProps> = ({
@@ -31,6 +32,7 @@ export const RouletteModal: React.FC<RouletteModalProps> = ({
   onClose,
   onPrizeWon,
   triggerGameTitle = 'Minijuego',
+  wonProductIds = [],
 }) => {
   const [isSpinning, setIsSpinning] = useState(false);
   const [hasSpun, setHasSpun] = useState(false);
@@ -293,9 +295,10 @@ export const RouletteModal: React.FC<RouletteModalProps> = ({
   // User taps one mystery box
   const handlePickMysteryBox = (index: number) => {
     if (selectedBoxIndex !== null) return; // Only one allowed!
+    const chosen = shuffledBoxes[index];
+    if (wonProductIds.includes(chosen.id)) return; // Cannot pick already won product!
 
     setSelectedBoxIndex(index);
-    const chosen = shuffledBoxes[index];
     setUnlockedProduct(chosen);
 
     sounds.playWin();
@@ -515,7 +518,9 @@ export const RouletteModal: React.FC<RouletteModalProps> = ({
               </h3>
               <p className="text-xs text-slate-300">
                 {selectedBoxIndex === null
-                  ? 'Toca solo 1 de las 4 cajas con "?" para descubrir tu regalo'
+                  ? wonProductIds.length > 0
+                    ? 'Toca una caja disponible con "?" (las grises ya fueron ganadas)'
+                    : 'Toca solo 1 de las 4 cajas con "?" para descubrir tu regalo'
                   : '¡Has desbloqueado tu regalo especial!'}
               </p>
             </div>
@@ -523,8 +528,29 @@ export const RouletteModal: React.FC<RouletteModalProps> = ({
             {/* 4 Mystery Boxes (2x2 Grid) */}
             <div className="grid grid-cols-2 gap-3 py-1">
               {shuffledBoxes.map((box, index) => {
+                const isAlreadyWon = wonProductIds.includes(box.id);
                 const isSelected = selectedBoxIndex === index;
                 const isOpened = selectedBoxIndex !== null;
+
+                // If already won: show in gray, disabled, cannot be clicked
+                if (isAlreadyWon) {
+                  return (
+                    <div
+                      key={box.id}
+                      className="relative aspect-square rounded-2xl border-2 border-slate-800 bg-slate-900/40 opacity-45 grayscale flex flex-col items-center justify-center p-2.5 select-none cursor-not-allowed"
+                    >
+                      <div className="w-10 h-10 rounded-xl bg-slate-800/90 border border-slate-700/60 flex items-center justify-center text-slate-500 text-lg font-black mb-1">
+                        ✓
+                      </div>
+                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wide">
+                        Ya Ganado
+                      </span>
+                      <span className="text-[9px] text-slate-500 font-medium line-clamp-1 px-1 mt-0.5 text-center">
+                        {box.name}
+                      </span>
+                    </div>
+                  );
+                }
 
                 return (
                   <button
