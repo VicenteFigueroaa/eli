@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import { ArrowLeft, RotateCcw, Sparkles, Delete } from 'lucide-react';
+import { ArrowLeft, RotateCcw, Sparkles, Delete, Heart } from 'lucide-react';
 import { sounds } from '../utils/sound';
 
 interface WordleMinigameProps {
@@ -11,7 +11,6 @@ interface WordleMinigameProps {
 
 type LetterStatus = 'correct' | 'present' | 'absent' | 'empty';
 
-// Wordle secret target word: ANNYELI
 const TARGET_WORD = 'ANNYELI';
 
 const KEYBOARD_ROWS = [
@@ -24,15 +23,15 @@ export const WordleMinigame: React.FC<WordleMinigameProps> = ({
   onComplete,
   onBack,
 }) => {
-  const targetWord = TARGET_WORD;
-  const wordLength = TARGET_WORD.length; // 7 letters: A-N-N-Y-E-L-I
-  const maxAttempts = 6;
-
+  const [targetWord] = useState(TARGET_WORD);
   const [guesses, setGuesses] = useState<string[]>([]);
   const [currentGuess, setCurrentGuess] = useState('');
   const [gameState, setGameState] = useState<'playing' | 'won' | 'lost'>('playing');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isShaking, setIsShaking] = useState(false);
+
+  const maxAttempts = 6;
+  const wordLength = TARGET_WORD.length; // 7 letters
 
   const startNewGame = useCallback(() => {
     setGuesses([]);
@@ -98,7 +97,7 @@ export const WordleMinigame: React.FC<WordleMinigameProps> = ({
         if (currentGuess.length < wordLength) {
           sounds.playMiss();
           setIsShaking(true);
-          showToast(`Faltan letras (${wordLength} requeridas)`);
+          showToast(`Faltan letras (${wordLength} letras requeridas)`);
           setTimeout(() => setIsShaking(false), 500);
           return;
         }
@@ -110,7 +109,7 @@ export const WordleMinigame: React.FC<WordleMinigameProps> = ({
         if (currentGuess === targetWord) {
           setGameState('won');
           sounds.playWin();
-          showToast('¡ERES TÚ, ANNYELI! ❤️🎉');
+          showToast('¡SÍ! ¡ERES TÚ, ANNYELI! 💖🎉');
           setTimeout(() => {
             onComplete();
           }, 1600);
@@ -118,7 +117,7 @@ export const WordleMinigame: React.FC<WordleMinigameProps> = ({
           // Lost
           setGameState('lost');
           sounds.playMiss();
-          showToast(`La palabra secreta era: ${targetWord}`);
+          showToast(`La palabra era: ${targetWord}`);
         } else {
           sounds.playHit();
         }
@@ -185,8 +184,9 @@ export const WordleMinigame: React.FC<WordleMinigameProps> = ({
         </button>
 
         <div className="text-center">
-          <h2 className="text-base font-black text-white tracking-wide">
-            Palabra Secreta
+          <h2 className="text-base font-black text-white tracking-wide flex items-center justify-center gap-1">
+            <span>Adivina la Palabra</span>
+            <Heart className="w-3.5 h-3.5 text-pink-400 fill-pink-400" />
           </h2>
           <span className="text-[10px] text-pink-300 font-bold">
             Intento {Math.min(guesses.length + 1, maxAttempts)} de {maxAttempts} • 7 Letras
@@ -202,23 +202,30 @@ export const WordleMinigame: React.FC<WordleMinigameProps> = ({
         </button>
       </div>
 
+      {/* Clue / Hint banner */}
+      <div className="text-center">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-pink-500/15 border border-pink-500/30 text-pink-300 text-xs font-bold">
+          <span>💡 Pista: Un nombre de 7 letras muy especial ✨</span>
+        </div>
+      </div>
+
       {/* Rules pill guide */}
       <div className="flex items-center justify-center gap-2 text-[10px] font-bold text-slate-400">
         <span className="flex items-center gap-1 text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
-          🟩 Letra exacta
+          🟩 Letra en su lugar
         </span>
         <span className="flex items-center gap-1 text-amber-400 bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20">
           🟨 En otra posición
         </span>
         <span className="flex items-center gap-1 text-slate-400 bg-slate-800/80 px-2 py-0.5 rounded-md border border-slate-700/60">
-          ⬛ Ausente
+          ⬛ No está
         </span>
       </div>
 
       {/* Toast Notification message */}
       <div className="h-6 flex items-center justify-center">
         {toastMessage && (
-          <div className="px-3.5 py-1 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-black shadow-lg animate-bounce">
+          <div className="px-3 py-1 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-black shadow-lg animate-bounce">
             {toastMessage}
           </div>
         )}
@@ -237,7 +244,7 @@ export const WordleMinigame: React.FC<WordleMinigameProps> = ({
           return (
             <div
               key={rowIndex}
-              className={`flex gap-1 sm:gap-1.5 ${
+              className={`flex gap-1 ${
                 isCurrentRow && isShaking ? 'animate-shake' : ''
               }`}
             >
@@ -258,7 +265,7 @@ export const WordleMinigame: React.FC<WordleMinigameProps> = ({
                   }
                 } else if (letter) {
                   bgClass =
-                    'bg-slate-800/90 border-pink-400 text-white scale-105 font-black shadow-sm';
+                    'bg-slate-800/90 border-pink-500 text-white scale-105 font-black shadow-sm';
                 }
 
                 return (
@@ -278,9 +285,9 @@ export const WordleMinigame: React.FC<WordleMinigameProps> = ({
       {/* Status banner when won or lost */}
       {gameState === 'won' ? (
         <div className="text-center py-2 space-y-1">
-          <div className="text-pink-400 font-black text-sm flex items-center justify-center gap-1.5">
-            <Sparkles className="w-4 h-4" />
-            ¡ANNYELI! ❤️ ¡ERES TÚ!
+          <div className="text-pink-300 font-black text-sm flex items-center justify-center gap-1.5">
+            <Sparkles className="w-4 h-4 text-pink-400" />
+            ¡ERES TÚ, ANNYELI! 💖
           </div>
           <p className="text-xs text-amber-300 font-semibold animate-pulse">
             Desbloqueando la Ruleta de Premios...
@@ -289,7 +296,7 @@ export const WordleMinigame: React.FC<WordleMinigameProps> = ({
       ) : gameState === 'lost' ? (
         <div className="text-center py-2 space-y-2">
           <p className="text-xs text-rose-400 font-bold">
-            ¡Se agotaron los intentos! La palabra secreta era:{' '}
+            ¡Se agotaron los intentos! La palabra era:{' '}
             <strong className="text-pink-300 uppercase tracking-widest">
               {targetWord}
             </strong>
