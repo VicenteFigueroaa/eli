@@ -30,6 +30,19 @@ export interface MinigameMeta {
   description: string;
 }
 
+export interface MysteryProduct {
+  id: string;
+  name: string;
+  brand: string;
+  category: string;
+  store: 'Amazon' | 'Sephora';
+  url: string;
+  color: string;
+  accentColor: string;
+  icon: string;
+  description: string;
+}
+
 export interface WonPrize {
   id: string;
   prizeId: string;
@@ -40,4 +53,7 @@ export interface WonPrize {
   wonFromGame: string;
   icon: string;
   color: string;
+  productUrl?: string;
+  brand?: string;
+  store?: string;
 }

@@ -1,4 +1,55 @@
-import { Prize } from '../types/game';
+import { Prize, MysteryProduct } from '../types/game';
+
+export const MYSTERY_PRODUCTS: MysteryProduct[] = [
+  {
+    id: 'avene-cleanance',
+    name: 'Avène Cleanance Gel Limpiador Facial (400ml)',
+    brand: 'Eau Thermale Avène',
+    category: 'Limpiador Facial • Piel Grasa',
+    store: 'Amazon',
+    url: 'https://a.co/d/0cvRXbPQ',
+    color: '#0284C7', // Sky Blue
+    accentColor: '#0369A1',
+    icon: 'sparkles',
+    description: 'Gel limpiador dermatológico purificante y matificante para rostro y piel con imperfecciones.',
+  },
+  {
+    id: 'lbel-mascara',
+    name: "L'BEL Máscara Tratante y Sérum para Pestañas (6g)",
+    brand: "L'BEL",
+    category: 'Tratamiento Pestañas AM/PM',
+    store: 'Amazon',
+    url: 'https://a.co/d/0fYYbeDt',
+    color: '#8B5CF6', // Purple
+    accentColor: '#7C3AED',
+    icon: 'sparkles',
+    description: 'Tratamiento especializado con queratina, pantenol y vitaminas para pestañas más largas y fuertes.',
+  },
+  {
+    id: 'huda-powder',
+    name: 'Huda Beauty Easy Bake Loose Powder Mini',
+    brand: 'Huda Beauty',
+    category: 'Mini Polvo Fijador de Maquillaje',
+    store: 'Sephora',
+    url: 'https://prod.sfcc.sephora.com.mx/products-748602.html',
+    color: '#EC4899', // Pink
+    accentColor: '#DB2777',
+    icon: 'sparkles',
+    description: 'Polvo fijador traslúcido de alta duración para un acabado mate y aterciopelado perfecto.',
+  },
+  {
+    id: 'toofaced-concealer',
+    name: 'Too Faced Born This Way Super Coverage Travel Size',
+    brand: 'Too Faced',
+    category: 'Corrector Multiusos para Rostro',
+    store: 'Sephora',
+    url: 'https://prod.sfcc.sephora.com.mx/products-757496.html',
+    color: '#F97316', // Orange
+    accentColor: '#EA580C',
+    icon: 'sparkles',
+    description: 'Corrector hidratante con infusión de agua de coco y rosa alpina para máxima cobertura.',
+  },
+];
 
 export const PRIZES: Prize[] = [
   {
@@ -19,14 +70,14 @@ export const PRIZES: Prize[] = [
     id: 'prod-1',
     name: 'Producto',
     type: 'product',
-    value: 200,
-    valueText: 'Producto Físico',
+    value: 350,
+    valueText: 'Caja Misteriosa',
     badgeText: 'PRODUCTO 🎁',
     color: '#8B5CF6', // Purple
     accentColor: '#7C3AED',
     textColor: '#FFFFFF',
     icon: 'gift',
-    description: '¡Ganaste un producto físico! El artículo sorpresa será confirmado para entrega.',
+    description: '¡Premio de producto! Toca una caja misteriosa con "?" para descubrir tu regalo de belleza.',
     weight: 16,
   },
   {
@@ -47,14 +98,14 @@ export const PRIZES: Prize[] = [
     id: 'prod-2',
     name: 'Producto',
     type: 'product',
-    value: 200,
-    valueText: 'Producto Físico',
+    value: 350,
+    valueText: 'Caja Misteriosa',
     badgeText: 'PRODUCTO 🎁',
     color: '#3B82F6', // Blue
     accentColor: '#2563EB',
     textColor: '#FFFFFF',
     icon: 'package',
-    description: '¡Ganaste un producto físico! El artículo sorpresa será confirmado para entrega.',
+    description: '¡Premio de producto! Toca una caja misteriosa con "?" para descubrir tu regalo de belleza.',
     weight: 16,
   },
   {
@@ -75,14 +126,14 @@ export const PRIZES: Prize[] = [
     id: 'prod-3',
     name: 'Producto',
     type: 'product',
-    value: 200,
-    valueText: 'Producto Físico',
+    value: 350,
+    valueText: 'Caja Misteriosa',
     badgeText: 'PRODUCTO 🎁',
     color: '#F97316', // Orange
     accentColor: '#EA580C',
     textColor: '#FFFFFF',
     icon: 'gift',
-    description: '¡Ganaste un producto físico! El artículo sorpresa será confirmado para entrega.',
+    description: '¡Premio de producto! Toca una caja misteriosa con "?" para descubrir tu regalo de belleza.',
     weight: 16,
   },
   {
@@ -103,14 +154,14 @@ export const PRIZES: Prize[] = [
     id: 'prod-4',
     name: 'Producto',
     type: 'product',
-    value: 200,
-    valueText: 'Producto Físico',
+    value: 350,
+    valueText: 'Caja Misteriosa',
     badgeText: 'PRODUCTO 🎁',
     color: '#6366F1', // Indigo
     accentColor: '#4F46E5',
     textColor: '#FFFFFF',
     icon: 'package',
-    description: '¡Ganaste un producto físico! El artículo sorpresa será confirmado para entrega.',
+    description: '¡Premio de producto! Toca una caja misteriosa con "?" para descubrir tu regalo de belleza.',
     weight: 15,
   },
 ];

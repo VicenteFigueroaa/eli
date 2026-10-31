@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { WonPrize } from '../types/game';
-import { X, Wallet, Package, Trophy, Sparkles, Check, ArrowRight } from 'lucide-react';
+import { X, Wallet, Package, Trophy, Sparkles, Check, ArrowRight, ExternalLink } from 'lucide-react';
 import { sounds } from '../utils/sound';
 
 interface PrizeInventoryModalProps {
@@ -113,9 +113,22 @@ export const PrizeInventoryModal: React.FC<PrizeInventoryModalProps> = ({
                   </div>
                 </div>
 
-                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-700 text-slate-300 shrink-0">
-                  {p.valueText}
-                </span>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  {p.productUrl && (
+                    <a
+                      href={p.productUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2 py-1 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 text-[10px] font-bold border border-indigo-500/30 flex items-center gap-1 active:scale-95 transition-all"
+                    >
+                      <span>Ver</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </a>
+                  )}
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-700 text-slate-300 shrink-0">
+                    {p.valueText}
+                  </span>
+                </div>
               </div>
             ))
           )}
