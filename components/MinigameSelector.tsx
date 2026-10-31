@@ -1,8 +1,21 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { MinigameId, MinigameMeta } from '../types/game';
-import { Target, Layers, Sparkles, Play, Clock, Zap, Gift, Type, CheckCircle2 } from 'lucide-react';
+import {
+  Target,
+  Layers,
+  Sparkles,
+  Play,
+  Clock,
+  Zap,
+  Type,
+  CheckCircle2,
+  KeyRound,
+  X,
+  Delete,
+  Lock,
+} from 'lucide-react';
 import { sounds } from '../utils/sound';
 
 interface MinigameSelectorProps {
@@ -59,12 +72,18 @@ const MINIGAMES: MinigameMeta[] = [
   },
 ];
 
+// Valid secret PINs to trigger extra roulette spins
+const VALID_PINS = ['1234', '2026', '7777'];
+
 export const MinigameSelector: React.FC<MinigameSelectorProps> = ({
   onSelectGame,
   onDirectRoulette,
   wonGames = [],
-  onResetProgress,
 }) => {
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [pin, setPin] = useState('');
+  const [pinError, setPinError] = useState(false);
+
   const getIcon = (type: string) => {
     switch (type) {
       case 'target':
@@ -83,6 +102,48 @@ export const MinigameSelector: React.FC<MinigameSelectorProps> = ({
   const handleStart = (id: MinigameId) => {
     sounds.playHit();
     onSelectGame(id);
+  };
+
+  const handleKeypadPress = (val: string) => {
+    sounds.playPop();
+
+    if (val === 'C') {
+      setPin('');
+      setPinError(false);
+      return;
+    }
+
+    if (val === '⌫') {
+      setPin((prev) => prev.slice(0, -1));
+      setPinError(false);
+      return;
+    }
+
+    if (pin.length < 4) {
+      const nextPin = pin + val;
+      setPin(nextPin);
+
+      // When 4th digit is entered, validate immediately!
+      if (nextPin.length === 4) {
+        if (VALID_PINS.includes(nextPin)) {
+          sounds.playWin();
+          setShowPinModal(false);
+          setPin('');
+          setPinError(false);
+          // Unlock roulette!
+          setTimeout(() => {
+            onDirectRoulette();
+          }, 300);
+        } else {
+          sounds.playMiss();
+          setPinError(true);
+          setTimeout(() => {
+            setPin('');
+            setPinError(false);
+          }, 600);
+        }
+      }
+    }
   };
 
   return (
@@ -166,36 +227,98 @@ export const MinigameSelector: React.FC<MinigameSelectorProps> = ({
         })}
       </div>
 
-      {/* Direct Sandbox Access (Optional) */}
-      <div className="p-3.5 rounded-2xl bg-slate-900/40 border border-slate-800/60 text-center space-y-2">
-        <p className="text-[11px] text-slate-400">
-          ¿Quieres probar directamente cómo gira la ruleta y los premios sin jugar antes?
-        </p>
-        <div className="flex items-center justify-center gap-2">
-          <button
-            onClick={() => {
-              sounds.playPop();
-              onDirectRoulette();
-            }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 text-amber-300 border border-amber-500/30 text-xs font-bold transition-all active:scale-95"
-          >
-            <Gift className="w-3.5 h-3.5" />
-            Probar Ruleta
-          </button>
-
-          {wonGames.length > 0 && onResetProgress && (
-            <button
-              onClick={() => {
-                sounds.playMiss();
-                onResetProgress();
-              }}
-              className="text-[11px] text-slate-500 hover:text-rose-400 transition-colors px-2 py-1"
-            >
-              Reiniciar juegos
-            </button>
-          )}
-        </div>
+      {/* Secret Cheat Code PIN Trigger (Discreet footer button) */}
+      <div className="pt-2 flex flex-col items-center justify-center text-center">
+        <button
+          onClick={() => {
+            sounds.playFlip();
+            setPin('');
+            setPinError(false);
+            setShowPinModal(true);
+          }}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-slate-500 hover:text-amber-400 text-[11px] font-bold hover:bg-slate-900 border border-transparent hover:border-slate-800 transition-all active:scale-95"
+        >
+          <KeyRound className="w-3.5 h-3.5" />
+          <span>Ingresar PIN secreto</span>
+        </button>
       </div>
+
+      {/* Secret PIN Modal */}
+      {showPinModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="relative w-full max-w-xs rounded-3xl bg-slate-900 border-2 border-amber-500/40 p-5 shadow-2xl flex flex-col items-center space-y-4">
+            {/* Close Button */}
+            <button
+              onClick={() => setShowPinModal(false)}
+              className="absolute top-4 right-4 p-1.5 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white border border-slate-700 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            {/* Modal Header */}
+            <div className="w-12 h-12 rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-md">
+              <Lock className="w-6 h-6" />
+            </div>
+
+            <div className="text-center space-y-1">
+              <h3 className="text-base font-black text-white">
+                Desbloqueo Secreto
+              </h3>
+              <p className="text-xs text-slate-400">
+                Ingresa el PIN de 4 dígitos para obtener un tiro extra en la ruleta
+              </p>
+            </div>
+
+            {/* PIN Dots (4 indicators) */}
+            <div
+              className={`flex items-center justify-center gap-3 py-1 transition-all ${
+                pinError ? 'animate-shake' : ''
+              }`}
+            >
+              {[0, 1, 2, 3].map((idx) => {
+                const isFilled = idx < pin.length;
+                return (
+                  <div
+                    key={idx}
+                    className={`w-4 h-4 rounded-full border-2 transition-all duration-200 ${
+                      pinError
+                        ? 'border-rose-500 bg-rose-500/40 scale-110'
+                        : isFilled
+                        ? 'border-amber-400 bg-amber-400 shadow-md shadow-amber-400/50 scale-110'
+                        : 'border-slate-700 bg-slate-800'
+                    }`}
+                  />
+                );
+              })}
+            </div>
+
+            {pinError && (
+              <p className="text-[11px] font-bold text-rose-400 -mt-1 animate-pulse">
+                PIN incorrecto, intenta de nuevo
+              </p>
+            )}
+
+            {/* Numeric Keypad (3x4) */}
+            <div className="grid grid-cols-3 gap-2 w-full pt-1 select-none">
+              {['1', '2', '3', '4', '5', '6', '7', '8', '9', 'C', '0', '⌫'].map(
+                (btn) => (
+                  <button
+                    key={btn}
+                    onClick={() => handleKeypadPress(btn)}
+                    className="h-12 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-white font-black text-base border border-slate-700/60 active:scale-95 transition-all flex items-center justify-center"
+                  >
+                    {btn === '⌫' ? (
+                      <Delete className="w-5 h-5 text-slate-300" />
+                    ) : (
+                      btn
+                    )}
+                  </button>
+                )
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
