@@ -51,6 +51,7 @@ export const MYSTERY_PRODUCTS: MysteryProduct[] = [
   },
 ];
 
+// 6 Casillas de la Ruleta con las probabilidades exactas solicitadas (Suma = 100%)
 export const PRIZES: Prize[] = [
   {
     id: 'shein-cart',
@@ -64,77 +65,7 @@ export const PRIZES: Prize[] = [
     textColor: '#FFFFFF',
     icon: 'shopping-bag',
     description: '¡Premio Mayor! Ganaste un carrito de compras de SHEIN para estrenar lo que quieras.',
-    weight: 7, // Probability weight
-  },
-  {
-    id: 'prod-1',
-    name: 'Producto',
-    type: 'product',
-    value: 350,
-    valueText: 'Caja Misteriosa',
-    badgeText: 'PRODUCTO 🎁',
-    color: '#8B5CF6', // Purple
-    accentColor: '#7C3AED',
-    textColor: '#FFFFFF',
-    icon: 'gift',
-    description: '¡Premio de producto! Toca una caja misteriosa con "?" para descubrir tu regalo de belleza.',
-    weight: 16,
-  },
-  {
-    id: 'cash-300',
-    name: '$300 MXN en Efectivo',
-    type: 'cash',
-    value: 300,
-    valueText: '$300 MXN',
-    badgeText: 'PREMIO MAYOR 👑',
-    color: '#F59E0B', // Amber / Gold
-    accentColor: '#D97706',
-    textColor: '#FFFFFF',
-    icon: 'crown',
-    description: '¡Felicidades! Ganaste el premio mayor de $300 pesos en efectivo directo para ti.',
-    weight: 8,
-  },
-  {
-    id: 'prod-2',
-    name: 'Producto',
-    type: 'product',
-    value: 350,
-    valueText: 'Caja Misteriosa',
-    badgeText: 'PRODUCTO 🎁',
-    color: '#3B82F6', // Blue
-    accentColor: '#2563EB',
-    textColor: '#FFFFFF',
-    icon: 'package',
-    description: '¡Premio de producto! Toca una caja misteriosa con "?" para descubrir tu regalo de belleza.',
-    weight: 16,
-  },
-  {
-    id: 'cash-200',
-    name: '$200 MXN en Efectivo',
-    type: 'cash',
-    value: 200,
-    valueText: '$200 MXN',
-    badgeText: 'PREMIO MAYOR 💰',
-    color: '#10B981', // Emerald
-    accentColor: '#059669',
-    textColor: '#FFFFFF',
-    icon: 'wallet',
-    description: '¡Excelente tiro! $200 pesos mexicanos en efectivo transferibles a tu cuenta.',
-    weight: 10,
-  },
-  {
-    id: 'prod-3',
-    name: 'Producto',
-    type: 'product',
-    value: 350,
-    valueText: 'Caja Misteriosa',
-    badgeText: 'PRODUCTO 🎁',
-    color: '#F97316', // Orange
-    accentColor: '#EA580C',
-    textColor: '#FFFFFF',
-    icon: 'gift',
-    description: '¡Premio de producto! Toca una caja misteriosa con "?" para descubrir tu regalo de belleza.',
-    weight: 16,
+    weight: 10, // 10%
   },
   {
     id: 'cash-150',
@@ -148,21 +79,63 @@ export const PRIZES: Prize[] = [
     textColor: '#FFFFFF',
     icon: 'banknote',
     description: '¡Enhorabuena! $150 pesos mexicanos en efectivo directo para ti.',
-    weight: 12,
+    weight: 28, // 28%
   },
   {
-    id: 'prod-4',
+    id: 'cash-300-a',
+    name: '$300 MXN en Efectivo',
+    type: 'cash',
+    value: 300,
+    valueText: '$300 MXN',
+    badgeText: 'PREMIO MAYOR 👑',
+    color: '#F59E0B', // Amber / Gold
+    accentColor: '#D97706',
+    textColor: '#FFFFFF',
+    icon: 'crown',
+    description: '¡Felicidades! Ganaste el premio mayor de $300 pesos en efectivo directo para ti.',
+    weight: 17, // 17%
+  },
+  {
+    id: 'prod-mystery',
     name: 'Producto',
     type: 'product',
     value: 350,
     valueText: 'Caja Misteriosa',
     badgeText: 'PRODUCTO 🎁',
-    color: '#6366F1', // Indigo
-    accentColor: '#4F46E5',
+    color: '#8B5CF6', // Purple
+    accentColor: '#7C3AED',
     textColor: '#FFFFFF',
-    icon: 'package',
+    icon: 'gift',
     description: '¡Premio de producto! Toca una caja misteriosa con "?" para descubrir tu regalo de belleza.',
-    weight: 15,
+    weight: 13, // 13%
+  },
+  {
+    id: 'cash-200',
+    name: '$200 MXN en Efectivo',
+    type: 'cash',
+    value: 200,
+    valueText: '$200 MXN',
+    badgeText: 'PREMIO MAYOR 💰',
+    color: '#10B981', // Emerald
+    accentColor: '#059669',
+    textColor: '#FFFFFF',
+    icon: 'wallet',
+    description: '¡Excelente tiro! $200 pesos mexicanos en efectivo transferibles a tu cuenta.',
+    weight: 24, // 24%
+  },
+  {
+    id: 'cash-300-b',
+    name: '$300 MXN en Efectivo',
+    type: 'cash',
+    value: 300,
+    valueText: '$300 MXN',
+    badgeText: 'PREMIO MAYOR 👑',
+    color: '#EAB308', // Yellow / Golden
+    accentColor: '#CA8A04',
+    textColor: '#FFFFFF',
+    icon: 'crown',
+    description: '¡Felicidades! Ganaste el premio mayor de $300 pesos en efectivo directo para ti.',
+    weight: 8, // 8%
   },
 ];
 
